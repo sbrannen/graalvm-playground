@@ -1,3 +1,6 @@
+# Compiled native image file
+*.bin
+
 # Compiled class file
 *.class
 
