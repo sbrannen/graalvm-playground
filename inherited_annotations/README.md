@@ -1,3 +1,7 @@
+# GraalVM Issue
+
+https://github.com/oracle/graal/issues/2243
+
 # Setup
 
 ```shell
@@ -9,16 +13,14 @@ mkdir -p build/META-INF/native-image
 
 ----
 
-# Inherited Instance Method
-
-## Compile and Run with standard JRE
+# Compile and Run with standard JRE
 
 ```shell
 javac InheritedAnnotations.java
 java InheritedAnnotations
 ```
 
-### Output ✅
+## Output ✅
 
 ```
 SUCCESS: @InheritedAnnotation was found as an annotation on Superclass.
@@ -27,14 +29,14 @@ SUCCESS: @InheritedAnnotation was found as an annotation on Subclass.
 SUCCESS: @InheritedAnnotation was found as a declared annotation on Subclass.
 ```
 
-## Build and Run Native Image
+# Build and Run Native Image
 
 ```shell
 native-image --no-fallback -H:Name=native-image.bin InheritedAnnotations
 ./native-image.bin
 ```
 
-### Output ❌
+## Output ❌
 
 ```
 SUCCESS: @InheritedAnnotation was found as an annotation on Superclass.
@@ -43,27 +45,27 @@ SUCCESS: @InheritedAnnotation was found as an annotation on Subclass.
 FAILURE: @InheritedAnnotation was NOT found as a declared annotation on Subclass.
 ```
 
-## Run with Native Image Agent
+# Run with Native Image Agent
 
 ```shell
 java -agentlib:native-image-agent=config-output-dir=build/META-INF/native-image InheritedAnnotations
 ```
 
-### Result
+## Result
 
 Generated `reflection-config.json` is empty:
 
 ```json
 ```
 
-## Build and Run Native Image with result of Agent
+# Build and Run Native Image with result of Agent
 
 ```shell
 native-image --no-fallback -H:Name=native-image.bin -cp .:build InheritedAnnotations
 ./native-image.bin
 ```
 
-### Output ❌
+## Output ❌
 
 It still fails, and this is to be expected since the agent didn't generate anything
 in `reflection-config.json`.
