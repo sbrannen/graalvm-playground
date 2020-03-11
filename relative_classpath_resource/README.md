@@ -1,6 +1,6 @@
 # GraalVM Issue
 
-???
+https://github.com/oracle/graal/issues/2250
 
 ----
 
