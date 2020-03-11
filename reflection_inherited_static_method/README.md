@@ -2,6 +2,8 @@
 
 https://github.com/oracle/graal/issues/2237
 
+----
+
 # Setup
 
 ```shell
@@ -241,121 +243,4 @@ native-image --no-fallback -H:Name=native-image.bin -cp .:build InheritedStaticA
 ```
 SUCCESS: found instance method getId() in java.time.ZoneRegion.
 SUCCESS: found static method of(String) in java.time.ZoneRegion.
-```
-
-----
-
-# Source Code
-
-```java
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.time.ZoneId;
-
-public class InheritedInstanceMethod {
-
-	public static void main(String[] args) throws Exception {
-		new Tester().performTest();
-	}
-}
-
-class Tester {
-
-	void performTest() throws Exception {
-		// Note: ZoneId.of() returns an instance of java.time.ZoneRegion.
-		ZoneId zoneId = ZoneId.of("GMT+1");
-		Class<?> clazz = zoneId.getClass();
-		instanceMethod(clazz);
-	}
-
-	private void instanceMethod(Class<?> clazz) throws NoSuchMethodException {
-		Method method = clazz.getMethod("getId");
-		if (method != null && !Modifier.isStatic(method.getModifiers())) {
-			System.out.format("SUCCESS: found instance method getId() in %s.%n", clazz.getName());
-		}
-		else {
-			System.err.format("FAILURE: did not find instance method getId() in %s.%n", clazz.getName());
-		}
-	}
-
-}
-```
-
-```java
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.time.ZoneId;
-
-public class InheritedStaticMethod {
-
-	public static void main(String[] args) throws Exception {
-		new Tester().performTest();
-	}
-}
-
-class Tester {
-
-	void performTest() throws Exception {
-		// Note: ZoneId.of() returns an instance of java.time.ZoneRegion.
-		ZoneId zoneId = ZoneId.of("GMT+1");
-		Class<?> clazz = zoneId.getClass();
-		staticMethod(clazz);
-	}
-
-	private void staticMethod(Class<?> clazz) throws NoSuchMethodException {
-		Method method = clazz.getMethod("of", String.class);
-		if (method != null && Modifier.isStatic(method.getModifiers())) {
-			System.out.format("SUCCESS: found static method of(String) in %s.%n", clazz.getName());
-		}
-		else {
-			System.err.format("FAILURE: did not find static method of(String) in %s.%n", clazz.getName());
-		}
-	}
-
-}
-```
-
-```java
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.time.ZoneId;
-
-public class InheritedStaticAndInstanceMethods {
-
-	public static void main(String[] args) throws Exception {
-		new Tester().performTest();
-	}
-}
-
-class Tester {
-
-	void performTest() throws Exception {
-		// Note: ZoneId.of() returns an instance of java.time.ZoneRegion.
-		ZoneId zoneId = ZoneId.of("GMT+1");
-		Class<?> clazz = zoneId.getClass();
-		instanceMethod(clazz);
-		staticMethod(clazz);
-	}
-
-	private void instanceMethod(Class<?> clazz) throws NoSuchMethodException {
-		Method method = clazz.getMethod("getId");
-		if (method != null && !Modifier.isStatic(method.getModifiers())) {
-			System.out.format("SUCCESS: found instance method getId() in %s.%n", clazz.getName());
-		}
-		else {
-			System.err.format("FAILURE: did not find instance method getId() in %s.%n", clazz.getName());
-		}
-	}
-
-	private void staticMethod(Class<?> clazz) throws NoSuchMethodException {
-		Method method = clazz.getMethod("of", String.class);
-		if (method != null && Modifier.isStatic(method.getModifiers())) {
-			System.out.format("SUCCESS: found static method of(String) in %s.%n", clazz.getName());
-		}
-		else {
-			System.err.format("FAILURE: did not find static method of(String) in %s.%n", clazz.getName());
-		}
-	}
-
-}
 ```

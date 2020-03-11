@@ -2,6 +2,8 @@
 
 https://github.com/oracle/graal/issues/2243
 
+----
+
 # Setup
 
 ```shell
@@ -75,60 +77,4 @@ SUCCESS: @InheritedAnnotation was found as an annotation on Superclass.
 SUCCESS: @InheritedAnnotation was found as a declared annotation on Superclass.
 SUCCESS: @InheritedAnnotation was found as an annotation on Subclass.
 FAILURE: @InheritedAnnotation was NOT found as a declared annotation on Subclass.
-```
-
-----
-
-# Source Code
-
-```java
-import java.lang.annotation.Annotation;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-public class InheritedAnnotations {
-
-	public static void main(String[] args) {
-		findAnnotation(Superclass.class);
-		findAnnotation(Subclass.class);
-	}
-
-	private static void findAnnotation(Class<?> clazz) {
-		Annotation[] annotations = clazz.getAnnotations();
-		if (annotations.length == 1 && annotations[0].annotationType().equals(InheritedAnnotation.class)) {
-			System.out.format("SUCCESS: @InheritedAnnotation was found as an annotation on %s.%n",
-				clazz.getSimpleName());
-		}
-		else {
-			System.out.format("FAILURE: @InheritedAnnotation was NOT found as an annotation on %s.%n",
-				clazz.getSimpleName());
-		}
-		Annotation[] declaredAnnotations = clazz.getDeclaredAnnotations();
-		if (declaredAnnotations.length == 1
-				&& declaredAnnotations[0].annotationType().equals(InheritedAnnotation.class)) {
-			System.out.format("SUCCESS: @InheritedAnnotation was found as a declared annotation on %s.%n",
-				clazz.getSimpleName());
-		}
-		else {
-			System.out.format("FAILURE: @InheritedAnnotation was NOT found as a declared annotation on %s.%n",
-				clazz.getSimpleName());
-		}
-	}
-
-
-	@Retention(RetentionPolicy.RUNTIME)
-	@Inherited
-	@interface InheritedAnnotation {
-	}
-
-	@InheritedAnnotation
-	static class Superclass {
-	}
-
-	@InheritedAnnotation
-	static class Subclass extends Superclass {
-	}
-
-}
 ```

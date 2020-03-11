@@ -2,6 +2,8 @@
 
 https://github.com/oracle/graal/issues/2063
 
+----
+
 # Setup
 
 ```			
@@ -10,13 +12,12 @@ export PATH=$GRAALVM_HOME/bin:$PATH
 export JAVA_HOME=$GRAALVM_HOME
 ```
 
-# Compile
+# Compile and Run with standard JRE
 
-`javac JavaPreferences.java`
-
-# Run
-
-`java JavaPreferences`
+```shell
+javac JavaPreferences.java
+java JavaPreferences
+```
 
 ## Output
 

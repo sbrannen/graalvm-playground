@@ -2,28 +2,7 @@
 
 https://github.com/oracle/graal/issues/2234
 
-# Source Code
-
-```java
-import java.util.TimeZone;
-
-public class TimeZoneIdParsing {
-
-	public static void main(String[] args) {
-		String input = "GMT+2";
-		String expected = "GMT+02:00";
-		TimeZone timeZone = TimeZone.getTimeZone(input);
-		String parsed = timeZone.getID();
-		if (!parsed.equals(expected)) {
-			System.err.format("FAILURE: expected '%s' to be parsed into '%s' but got '%s'.%n", input, expected, parsed);
-		}
-		else {
-			System.out.format("SUCCESS: '%s' was correctly parsed into '%s'.%n", input, parsed);
-		}
-	}
-
-}
-```
+----
 
 # Setup
 
