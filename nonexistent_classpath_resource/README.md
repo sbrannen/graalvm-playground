@@ -40,8 +40,8 @@ native-image --no-fallback -H:Name=native-image.bin NonexistentClasspathResource
 
 ## Output ❌
 
-```
-FAILURE: could not find classpath resource: NonexistentClasspathResource.class
+```diff
+- FAILURE: could not find classpath resource: NonexistentClasspathResource.class
 ```
 
 # Run with Native Image Agent
