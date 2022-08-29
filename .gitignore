@@ -1,5 +1,6 @@
-# Compiled native image file
+# Native image files
 *.bin
+*.build_artifacts.txt
 
 # Compiled class file
 *.class
@@ -10,14 +11,7 @@ build/
 # Log file
 *.log
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
